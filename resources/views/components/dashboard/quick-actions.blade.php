@@ -1,53 +1,66 @@
-<div class="bg-white rounded-lg shadow-sm p-6">
-    <h3 class="text-lg font-medium text-gray-900 mb-4">Ações Rápidas</h3>
+        <section class="bg-white rounded-xl shadow-sm border border-gray-100">
+            <div class="px-6 py-5 border-b border-gray-100">
+                <h2 class="text-xl font-semibold text-gray-900">Ações Rápidas</h2>
+                <p class="text-sm text-gray-600 mt-1">Acesse rapidamente as funcionalidades mais utilizadas</p>
+            </div>
 
-    <div class="space-y-3">
-        <a href="{{ route('feed-projection.index') }}"
-           class="flex items-center p-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-            <div class="p-2 bg-blue-100 text-blue-600 rounded-lg mr-3">
-                <i class="fas fa-calculator"></i>
-            </div>
-            <div>
-                <p class="font-medium">Calcular Projeção</p>
-                <p class="text-xs text-gray-500">Projeção de consumo de ração</p>
-            </div>
-            <i class="fas fa-chevron-right ml-auto text-gray-400"></i>
-        </a>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Calcular Projeção -->
+                    <a href="{{ route('feed-projection.index') }}"
+                       class="group flex items-center p-4 rounded-lg border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-200">
+                        <div
+                             class="flex-shrink-0 p-3 bg-blue-50 text-blue-600 rounded-lg group-hover:bg-blue-100 transition-colors">
+                            <i class="fas fa-calculator text-lg"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="font-semibold text-gray-900 group-hover:text-blue-700">Calcular Projeção</h3>
+                            <p class="text-sm text-gray-500">Projeção de consumo de ração</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400 group-hover:text-blue-500 transition-colors"></i>
+                    </a>
 
-        <a href="{{ route('reports.index') }}"
-           class="flex items-center p-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-            <div class="p-2 bg-green-100 text-green-600 rounded-lg mr-3">
-                <i class="fas fa-chart-bar"></i>
-            </div>
-            <div>
-                <p class="font-medium">Relatórios</p>
-                <p class="text-xs text-gray-500">Visualizar relatórios detalhados</p>
-            </div>
-            <i class="fas fa-chevron-right ml-auto text-gray-400"></i>
-        </a>
+                    <!-- Relatórios -->
+                    <a href="{{ route('reports.index') }}"
+                       class="group flex items-center p-4 rounded-lg border border-gray-200 hover:border-green-300 hover:shadow-md transition-all duration-200">
+                        <div
+                             class="flex-shrink-0 p-3 bg-green-50 text-green-600 rounded-lg group-hover:bg-green-100 transition-colors">
+                            <i class="fas fa-chart-bar text-lg"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="font-semibold text-gray-900 group-hover:text-green-700">Relatórios</h3>
+                            <p class="text-sm text-gray-500">Visualizar relatórios detalhados</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400 group-hover:text-green-500 transition-colors"></i>
+                    </a>
 
-        <a href="{{ route('reports.index', ['report_type' => 'summary']) }}"
-           class="flex items-center p-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-            <div class="p-2 bg-yellow-100 text-yellow-600 rounded-lg mr-3">
-                <i class="fas fa-chart-pie"></i>
-            </div>
-            <div>
-                <p class="font-medium">Resumo Estatístico</p>
-                <p class="text-xs text-gray-500">Análise resumida do período</p>
-            </div>
-            <i class="fas fa-chevron-right ml-auto text-gray-400"></i>
-        </a>
+                    <!-- Resumo Estatístico -->
+                    <a href="{{ route('reports.index', ['report_type' => 'summary']) }}"
+                       class="group flex items-center p-4 rounded-lg border border-gray-200 hover:border-yellow-300 hover:shadow-md transition-all duration-200">
+                        <div
+                             class="flex-shrink-0 p-3 bg-yellow-50 text-yellow-600 rounded-lg group-hover:bg-yellow-100 transition-colors">
+                            <i class="fas fa-chart-pie text-lg"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="font-semibold text-gray-900 group-hover:text-yellow-700">Resumo Estatístico</h3>
+                            <p class="text-sm text-gray-500">Análise resumida do período</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400 group-hover:text-yellow-500 transition-colors"></i>
+                    </a>
 
-        <a href="{{ route('feed-projection.export-csv') }}"
-           class="flex items-center p-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-            <div class="p-2 bg-purple-100 text-purple-600 rounded-lg mr-3">
-                <i class="fas fa-download"></i>
+                    <!-- Exportar Dados -->
+                    <a href="{{ route('feed-projection.export-csv') }}"
+                       class="group flex items-center p-4 rounded-lg border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all duration-200">
+                        <div
+                             class="flex-shrink-0 p-3 bg-purple-50 text-purple-600 rounded-lg group-hover:bg-purple-100 transition-colors">
+                            <i class="fas fa-download text-lg"></i>
+                        </div>
+                        <div class="ml-4 flex-1">
+                            <h3 class="font-semibold text-gray-900 group-hover:text-purple-700">Exportar Dados</h3>
+                            <p class="text-sm text-gray-500">Download CSV/Excel</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400 group-hover:text-purple-500 transition-colors"></i>
+                    </a>
+                </div>
             </div>
-            <div>
-                <p class="font-medium">Exportar Dados</p>
-                <p class="text-xs text-gray-500">Download CSV/Excel</p>
-            </div>
-            <i class="fas fa-chevron-right ml-auto text-gray-400"></i>
-        </a>
-    </div>
-</div>
+        </section>

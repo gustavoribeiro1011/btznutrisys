@@ -50,7 +50,7 @@ class FeedProjectionService
     {
         $weeklyReport = [];
         $totalConsumption = 0;
-        $cumulativeTotal = 0;
+        $cumulativeTotal = 0; // Acumulativo em KG
 
         // Filtra abates por período se especificado
         $filteredSlaughter = collect($slaughterData);
@@ -72,38 +72,45 @@ class FeedProjectionService
             return Carbon::parse($item['date'])->weekOfYear;
         });
 
-        // Processa cada semana
+        // Ordena por semana para garantir processamento sequencial
+        $slaughterByWeek = $slaughterByWeek->sortKeys();
+
+        // Processa cada semana em ordem
         foreach ($slaughterByWeek as $weekNumber => $weekSlaughter) {
             $weekStartDate = Carbon::now()->setISODate(Carbon::now()->year, $weekNumber)->startOfWeek();
             $weekEndDate = $weekStartDate->copy()->endOfWeek();
 
-            // Calcula consumo da semana baseado nos abates
-            $weekFeedConsumption = $this->calculateWeeklyFeedConsumption($weekSlaughter, $weeklyConsumption, $weekNumber);
+            // Calcula consumo da semana baseado nos abates (retorna em gramas)
+            $weekFeedConsumptionGrams = $this->calculateWeeklyFeedConsumption($weekSlaughter, $weeklyConsumption, $weekNumber);
 
-            $cumulativeTotal += $weekFeedConsumption;
-            $totalConsumption += $weekFeedConsumption;
+            // Converte para KG
+            $weekFeedConsumptionKg = round($weekFeedConsumptionGrams / 1000, 2);
+
+            // Soma ao acumulado (já em KG)
+            $cumulativeTotal += $weekFeedConsumptionKg;
+            $totalConsumption += $weekFeedConsumptionKg;
 
             $weeklyReport[] = [
                 'week' => $weekNumber,
                 'period_start' => $weekStartDate->format('d/m/Y'),
                 'period_end' => $weekEndDate->format('d/m/Y'),
-                'feed_consumption_kg' => round($weekFeedConsumption / 1000, 2), // Converte gramas para kg
-                'feed_consumption_g' => $weekFeedConsumption,
+                'feed_consumption_kg' => $weekFeedConsumptionKg,
+                'feed_consumption_g' => $weekFeedConsumptionGrams,
                 'slaughter_quantity' => $weekSlaughter->sum('slaughter_quantity'),
-                'weekly_total_kg' => round($weekFeedConsumption / 1000, 2),
-                'cumulative_total_kg' => round($cumulativeTotal / 1000, 2),
+                'weekly_total_kg' => $weekFeedConsumptionKg, // Igual ao consumo da semana
+                'cumulative_total_kg' => round($cumulativeTotal, 2), // Total acumulado correto
             ];
         }
 
-        // Ordena por semana
+        // Ordena por semana (garantia adicional)
         usort($weeklyReport, function($a, $b) {
             return $a['week'] <=> $b['week'];
         });
 
         return [
             'weeks' => $weeklyReport,
-            'total_consumption' => round($totalConsumption / 1000, 2), // em kg
-            'total_consumption_g' => $totalConsumption, // em gramas
+            'total_consumption' => round($totalConsumption, 2), // em kg
+            'total_consumption_g' => $totalConsumption * 1000, // em gramas
             'period_start' => $startDate,
             'period_end' => $endDate,
         ];
@@ -147,10 +154,10 @@ class FeedProjectionService
                 $week['week'],
                 $week['period_start'],
                 $week['period_end'],
-                $week['feed_consumption_kg'],
-                $week['slaughter_quantity'],
-                $week['weekly_total_kg'],
-                $week['cumulative_total_kg'],
+                number_format($week['feed_consumption_kg'], 2, ',', '.'),
+                number_format($week['slaughter_quantity'], 0, ',', '.'),
+                number_format($week['weekly_total_kg'], 2, ',', '.'),
+                number_format($week['cumulative_total_kg'], 2, ',', '.'),
             ];
         }
 
