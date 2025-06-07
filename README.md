@@ -10,7 +10,7 @@ Sistema para gerenciamento e projeção de consumo de ração para granjas de fr
 
 ## Como instalar
 
-  Observaçãoes:
+  Observação:
 - Esse projeto utiliza PostgreSQL na versão 17, antes de começar verifique se as extenções do seu arquivo php.ini estão habilitadas:
   extension=pgsql
   extension=pdo_pgsql
@@ -21,3 +21,5 @@ Sistema para gerenciamento e projeção de consumo de ração para granjas de fr
 - composer install
 - php artisan migrate
 - php artisan serve
+
+## Decisões técnicas

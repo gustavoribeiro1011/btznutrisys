@@ -4,6 +4,8 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeedConsumptionController;
+use App\Http\Controllers\FeedProjectionController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Middleware\AuthCustom;
 use App\Http\Controllers\SlaughterCalendarController;
 use Illuminate\Support\Facades\Route;
@@ -44,8 +46,20 @@ Route::middleware([AuthCustom::class])->group(function () {
         'destroy' => 'slaughter.destroy'
     ]);
 
-    Route::get('/config', [AccountController::class, 'index'])
-        ->name('account.index');
+    // Rotas para Projeção de Ração
+    Route::prefix('feed-projection')->name('feed-projection.')->group(function () {
+        Route::get('/', [FeedProjectionController::class, 'index'])->name('index');
+        Route::get('/export-csv', [FeedProjectionController::class, 'exportCSV'])->name('export-csv');
+        Route::get('/data', [FeedProjectionController::class, 'getData'])->name('data'); // Para requisições AJAX
+    });
+
+    // Rotas para Relatórios
+    Route::prefix('reports')->name('reports.')->group(function () {
+        Route::get('/', [ReportsController::class, 'index'])->name('index');
+        Route::get('/export-csv', [ReportsController::class, 'exportCSV'])->name('export-csv');
+        Route::get('/export-excel', [ReportsController::class, 'exportExcel'])->name('export-excel');
+        Route::get('/data', [ReportsController::class, 'getData'])->name('data'); // Para requisições AJAX
+    });
 
     // Rota API para AJAX do Slaughter (opcional)
     Route::get('/api/slaughter', [SlaughterCalendarController::class, 'apiIndex'])

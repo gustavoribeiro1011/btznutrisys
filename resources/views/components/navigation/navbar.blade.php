@@ -25,12 +25,12 @@
                     <i class="fas fa-calendar-alt mr-2"></i>
                     Datas de Abate
                 </a>
-                <a href="#"
+                <a href="{{ route('feed-projection.index') }}"
                    class="text-blue-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <i class="fas fa-chart-line mr-2"></i>
-                    Projeção
+                    Projeção de Ração
                 </a>
-                <a href="#"
+                <a href="{{ route('reports.index') }}"
                    class="text-blue-200 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                     <i class="fas fa-file-alt mr-2"></i>
                     Relatórios
