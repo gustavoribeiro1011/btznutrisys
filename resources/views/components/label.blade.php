@@ -3,7 +3,7 @@
 @switch($theme)
     @case('secondary')
         <label for="{{ $for }}"
-               class="block text-base font-medium text-gray-500 dark:text-gray-300 pb-2">
+               class="block text-base font-medium text-gray-500 pb-2">
             {{ $label }}
             {{ $slot }}
         </label>
@@ -11,7 +11,7 @@
 
     @default
         <label for="{{ $for }}"
-               class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+               class="block text-sm font-medium text-gray-700">
             {{ $label }}
             {{ $slot }}
         </label>

@@ -22,6 +22,7 @@
     'dataInputId' => null,
     'noSpaces' => false, // Nova propriedade para impedir espaços em branco
     'required' => false,
+    'hideError' => false, // Nova propriedade para ocultar erros
 ])
 
 <div class="flex items-stretch mt-1">
@@ -37,7 +38,7 @@
            value="{!! old($name, default: $value ?? '') !!}"
            placeholder="{{ $placeholder ?? '' }}"
            @if ($autocomplete === 'off') autocomplete="{{ $type === 'password' ? 'new-password' : 'off' }}" @endif
-           class="p-2 w-full border bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-gray-600 dark:focus:border-gray-400 dark:text-gray-300 dark:placeholder-gray-500 placeholder-gray-500 rounded-md @if ($addon && $addonPosition === 'start') rounded-l-none @elseif($addon && $addonPosition === 'end') rounded-r-none @endif @error($name) border-red-500 @enderror {{ $class }}"
+           class="p-2 w-full border bg-white border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500    placeholder-gray-500 rounded-md @if ($addon && $addonPosition === 'start') rounded-l-none @elseif($addon && $addonPosition === 'end') rounded-r-none @endif @error($name) border-red-500 focus:border-red-500 focus:ring-red-500 @enderror {{ $class }}"
            @if ($wireModel) wire:model.debounce.500ms="{{ $wireModel }}" @endif
            @if ($wireModelDefer) wire:model.defer="{{ $wireModel }}" @endif
            @if ($wireModelLazy) wire:model.lazy="{{ $wireModel }}" @endif
@@ -73,6 +74,7 @@
                         $el.dispatchEvent(changeEvent);
                     }, 100); @endif "
 
+
            @endif
     @if ($required) required @endif
     />
@@ -84,6 +86,8 @@
     @endif
 </div>
 
-@error($name)
-    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-@enderror
+@unless (isset($hideError) && $hideError)
+    @if ($errors->has($name))
+        <p class="text-red-500 text-sm mt-1">{{ $errors->first($name) }}</p>
+    @endif
+@endunless

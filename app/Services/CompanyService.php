@@ -13,15 +13,13 @@ class CompanyService
 
     public function __construct()
     {
-        $this->baseUrl = 'https://desafio.grupobtz.com.br/public';
-        $this->token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDkxMzA5NzQsImV4cCI6MTc4MDY2Njk3NCwiZGF0YSI6eyJ1c2VybmFtZSI6Imd1c3Rhdm9oQGRlc2FmaW8yMDI1In19.NqBzYkOtrAaDGpF2ZdKwivUR3OKXe0S689G_z507GVU';
-        $this->keyword = 'g2025h@r';
+        $this->baseUrl = env('API_URL');
+        $this->token = env('API_TOKEN');
+        $this->keyword = env('API_KEYWORD');
     }
 
     /**
-     * Lista todas as empresas disponíveis
-     *
-     * @return array
+     * Lista todas as empresas da API
      */
     public function listarEmpresas()
     {
@@ -38,11 +36,9 @@ class CompanyService
 
             Log::error('Erro ao buscar empresas: ' . $response->body());
             return [];
-
         } catch (\Exception $e) {
             Log::error('Erro na requisição para listar empresas: ' . $e->getMessage());
             return [];
         }
     }
-
 }
