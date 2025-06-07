@@ -58,10 +58,10 @@
             <p class="text-sm text-gray-600 mb-3">
                 Visualize e gerencie o calendário de abates programados por empresa.
             </p>
-            <a href="#"
+            <a href="{{ route('slaughter.index') }}"
                class="inline-flex items-center text-sm font-medium text-red-600 hover:text-red-700">
-                Em breve
-                <i class="fas fa-clock ml-1"></i>
+                Acessar módulo
+                <<i class="fas fa-arrow-right ml-1"></i>
             </a>
         </div>
     </div>
