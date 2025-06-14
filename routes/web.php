@@ -8,6 +8,7 @@ use App\Http\Controllers\FeedProjectionController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Middleware\AuthCustom;
 use App\Http\Controllers\SlaughterCalendarController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Rota raiz - redireciona baseado no status de autenticação
@@ -64,7 +65,10 @@ Route::middleware([AuthCustom::class])->group(function () {
     // Rota API para AJAX do Slaughter (opcional)
     Route::get('/api/slaughter', [SlaughterCalendarController::class, 'apiIndex'])
         ->name('slaughter.api.index');
-});
+
+    Route::resource('users', UserController::class);
+
+    });
 
 // Rota de logout
 Route::post('/logout', function () {
